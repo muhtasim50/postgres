@@ -10,3 +10,10 @@ CREATE TABLE users(
 
 INSERT INTO users(user_name, email, department, user_password)
 VALUES('seemanta', 'seemanta@gmail.com', 'CSE', 'seemanta123');
+
+CREATE TABLE departments(
+    deptName VARCHAR(255) NOT NULL
+);
+
+INSERT INTO departments(deptName)
+VALUES('CSE'), ('EEE'), ('IPE'), ('Chem'), ('Phy'), ('Bangla');
