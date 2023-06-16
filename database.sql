@@ -17,3 +17,12 @@ CREATE TABLE departments(
 
 INSERT INTO departments(deptName)
 VALUES('CSE'), ('EEE'), ('IPE'), ('Chem'), ('Phy'), ('Bangla');
+
+
+CREATE TABLE permission(
+    roleid INT NOT NULL,
+    operation VARCHAR(255) NOT NULL
+);
+
+INSERT INTO permission(roleid, operation)
+VALUES(0, 'Can read departments and notices'), (1, 'Can create departments and notices'), ('1, '), ('Chem'), ('Phy'), ('Bangla');

@@ -8,7 +8,8 @@ const refreshGenerator = require('../utils/refreshGenerator')
 const userCtrl = {
     register: async (req, res) =>{
         let {name, guardName, email, password} = req.body;
-
+        if(password.length < 6) return res.status(400).json({msg: "password length should be at least 6"})
+        
         console.log({
             name,
             guardName,
