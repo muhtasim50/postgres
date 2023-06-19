@@ -26,3 +26,11 @@ CREATE TABLE permission(
 
 INSERT INTO permission(roleid, operation)
 VALUES(0, 'Can read departments and notices'), (1, 'Can create departments and notices'), ('1, '), ('Chem'), ('Phy'), ('Bangla');
+
+
+CREATE TABLE notices(
+    noticeID VARCHAR(255) PRIMARY KEY NOT NULL,
+    noticeTITLE VARCHAR(255) NOT NULL,
+    deptName VARCHAR(255) NOT NULL,
+    images OID NOT NULL
+);

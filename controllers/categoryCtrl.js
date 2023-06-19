@@ -54,6 +54,24 @@ const categoryCtrl = {
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
+    },
+    updateCategory: async (req, res) => {
+        try {
+            let {updatedName, deptName} = req.body;
+            // console.log(deptName)
+            pool.query(`SELECT * FROM departments where deptName = $1`, [deptName], async (err, results) => {
+                if(err) throw err;
+                
+                if(results.rows.length == 0) return res.status(400).json({msg: "the department does not exist"})
+
+                await pool.query(`UPDATE departments SET deptName = $1 WHERE deptName = $2;`, [updatedName, deptName])
+                
+                res.json('Updated the Department')
+
+            })
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
     }
 }
 
