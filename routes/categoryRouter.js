@@ -7,4 +7,7 @@ router.route('/category')
     .get(categoryCtrl.getCategories)
     .post(autho, authoAdmin, categoryCtrl.createCategory)
 
+router.route('/category')
+    .delete(autho, authoAdmin, categoryCtrl.deleteCategory)
+
 module.exports = router

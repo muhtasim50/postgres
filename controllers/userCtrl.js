@@ -9,7 +9,7 @@ const userCtrl = {
     register: async (req, res) =>{
         let {name, guardName, email, password} = req.body;
         if(password.length < 6) return res.status(400).json({msg: "password length should be at least 6"})
-        
+
         console.log({
             name,
             guardName,
@@ -41,7 +41,7 @@ const userCtrl = {
                                 path: '/user/refresh_token'
                             })
 
-                            res.json({ accesstoken })
+                            res.json({ accesstoken, refreshtoken })
 
                             // res.json({password, passwordhash})
                         })
@@ -72,7 +72,7 @@ const userCtrl = {
                     path: '/user/refresh_token'
                 })
 
-                res.json({ accesstoken })
+                res.json({ accesstoken, refreshtoken })
     
                 
             })
