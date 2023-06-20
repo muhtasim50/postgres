@@ -30,14 +30,14 @@ const userCtrl = {
             // if(password.length < 6) return res.status(400).json({msg: "password length should be at least 6"})
             // if(results.rows.length > 0) return res.status(400).json({msg: "the email already exist"})
             
-            let errorSample = [{errorCode: 0, errorMessage: ""}];
+            let errorSample = {errorCode: 0, errorMessage: ""};
             let sample = { error: [errorSample], data: [dataSample] };
 
             if (password.length < 6) {
-                errorSample[0] = {errorCode: 200, errorMessage: "password length should be at least 6"}
+                sample.error[0] = {errorCode: 200, errorMessage: "password length should be at least 6"}
             }
             if (results.rows.length > 0) {
-                errorSample[1] = {errorCode: 201, errorMessage: "the email already exist"}
+                sample.error[1] = {errorCode: 201, errorMessage: "the email already exist"}
             }
 
         
