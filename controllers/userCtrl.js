@@ -29,41 +29,38 @@ const userCtrl = {
 
             // if(password.length < 6) return res.status(400).json({msg: "password length should be at least 6"})
             // if(results.rows.length > 0) return res.status(400).json({msg: "the email already exist"})
-            
-            let errorSample = {errorCode: 0, errorMessage: ""};
+
+            let errorSample = { errorCode: 0, errorMessage: "" };
             let sample = { error: [errorSample], data: [dataSample] };
 
             if (password.length < 6) {
-                sample.error[0] = {errorCode: 200, errorMessage: "password length should be at least 6"}
+                sample.error[0] = { errorCode: 200, errorMessage: "password length should be at least 6" }
             }
             if (results.rows.length > 0) {
-                sample.error[1] = {errorCode: 201, errorMessage: "the email already exist"}
+                sample.error[1] = { errorCode: 201, errorMessage: "the email already exist" }
             }
 
-        
-            if (sample.error !== null) {
-                return res.json({ sample })
-            }
-            else {
-                pool.query(`INSERT INTO userinfos (name, guardName, email, password)
+
+
+            pool.query(`INSERT INTO userinfos (name, guardName, email, password)
                         VALUES ($1, $2, $3, $4) RETURNING id, password`, [name, guardName, email, passwordhash], (er, reslt) => {
-                    if (er) throw er;
+                if (er) throw er;
 
-                    // authentication
+                // authentication
 
-                    const accesstoken = jwtGenerator(reslt.rows[0].id)
-                    const refreshtoken = refreshGenerator(reslt.rows[0].id)
+                const accesstoken = jwtGenerator(reslt.rows[0].id)
+                const refreshtoken = refreshGenerator(reslt.rows[0].id)
 
-                    res.cookie('refreshtoken', refreshtoken, {
-                        httpOnly: true,
-                        path: '/user/refresh_token'
-                    })
-
-                    res.json({ sample, accesstoken, refreshtoken })
-
-                    // res.json({password, passwordhash})
+                res.cookie('refreshtoken', refreshtoken, {
+                    httpOnly: true,
+                    path: '/user/refresh_token'
                 })
-            }
+
+                res.json({ sample, accesstoken, refreshtoken })
+
+                // res.json({password, passwordhash})
+            })
+
 
         })
 
@@ -80,17 +77,17 @@ const userCtrl = {
                 let sample = { error: [errorSample], data: [dataSample] };
 
                 if (results.rows.length == 0) {
-                    sample.error[0] = {errorCode: 202, errorMessage: "the user does not exist"}
-                    
+                    sample.error[0] = { errorCode: 202, errorMessage: "the user does not exist" }
+
                     return res.json({ sample })
-                }else {
-                    sample.error[0] = {errorCode: "Sucess", errorMessage: "the user exist"}
+                } else {
+                    sample.error[0] = { errorCode: "Sucess", errorMessage: "the user exist" }
                 }
 
                 const isMatch = await bcrypt.compare(password, results.rows[0].password);
 
                 if (!isMatch) {
-                    sample.error[1] = {errorCode: 203, errorMessage: "incorrect password"}
+                    sample.error[1] = { errorCode: 203, errorMessage: "incorrect password" }
                 }
 
                 // res.json({ msg: "Successful LOGIN"})
